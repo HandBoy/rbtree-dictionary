@@ -18,6 +18,9 @@ public class RBTreeDictionary {
 	public void setTamanho(int tamanho) {
 		this.tamanho = tamanho;
 	}
+	public void growUp(){
+		this.tamanho++;
+	}
 	
 	
 }
