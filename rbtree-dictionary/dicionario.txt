@@ -1,12 +1,8 @@
-Adeus	
-Adorável
-Amor
-Caminhos
-Chuva	
-Coragem
-Cuidar	
-Cumplicidade
-Efêmero	
-Equilíbrio
-Enternecer	
-Esperança
+fortuito     1    
+esperança     1    
+malária     1    
+doido     1    
+facão     1    
+esperança     1   
+cavalo     1    
+drone     1    
