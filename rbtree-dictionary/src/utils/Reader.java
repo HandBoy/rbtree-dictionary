@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reader {
-	public static List<String> lerArquivo(String arq){
-		List<String> palavras = new ArrayList<String>();
+	public static List<Node> lerArquivo(String arq){
+		List<Node> palavras = new ArrayList<Node>();
 		
 		File arquivo = new File(arq);
 
@@ -23,8 +23,12 @@ public class Reader {
 				//equanto houver mais linhas
 				String linha;
 				while (br.ready()) {				
-					linha = br.readLine();						//lê a proxima linha				
-					palavras.add(linha);
+					linha = br.readLine().trim();						//lê a proxima linha	
+					//System.out.println(linha.substring(0, linha.length()-1));
+					//System.out.println(linha.charAt(linha.length()-1));
+					Node palavra = new Node(linha.substring(0, linha.length()-1));
+					palavra.setAcao(linha.charAt(linha.length()-1));
+					palavras.add(palavra);
 				}
 
 				br.close();
