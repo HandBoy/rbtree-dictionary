@@ -1,8 +1,7 @@
-fortuito     1    
-esperança     1    
-malária     1    
-doido     1    
-facão     1    
-esperança     1   
-cavalo     1    
-drone     1    
+fortuito     1
+esperança     1
+malária     1
+doido     1
+facão     1
+cavalo     1
+drone     1

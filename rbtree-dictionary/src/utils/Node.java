@@ -1,13 +1,13 @@
 package utils;
 
 public class Node {
-	private Node pai;
-	private Node esquerda;
-	private Node direita;
-	private String cor;
-	private int chave;
-	private String palavra;
-	private int acao;	
+	protected Node pai;
+	protected Node esquerda;
+	protected Node direita;
+	protected String cor;
+	protected int chave;
+	protected String palavra;
+	protected int acao;	
 
 	public Node(String palavra) {
 		super();
@@ -18,6 +18,12 @@ public class Node {
 		this.palavra = palavra;
 		this.chave = Hash.hash(palavra);		
 	}
+	
+	public Node() {
+		super();		
+	}
+	
+	
 	public int getChave() {
 		return chave;
 	}
@@ -65,26 +71,26 @@ public class Node {
 	public String details(){
 
 		StringBuilder stBuilder = new StringBuilder();
-		if(this.getPai() == null ){
-			stBuilder.append("Pai: null"); 
+		if(this.getPai() instanceof Nill ){
+			stBuilder.append("Pai: NULL "); 
 		} else {
 			stBuilder.append("Pai: " + this.getPai().getPalavra()); 
 		}	
 
-		stBuilder.append(" Chave: " + this.chave );
 		stBuilder.append(" Palavra: " + this.palavra );
+		stBuilder.append(" Chave: " + this.chave );		
 		stBuilder.append(" Cor: " + this.cor );
 		
 		if(this.getEsquerda() == null ){
-			stBuilder.append(" FilhoEsq: null"); 
+			stBuilder.append(" FilhoEsq: NULL "); 
 		} else {
-			stBuilder.append(" FilhoEsq: " + this.getEsquerda().getPalavra() ); 
+			stBuilder.append(" FilhoEsq: " + this.getEsquerda().getPalavra()+ " " + this.getEsquerda().getChave()); 
 		}
 		
 		if(this.getDireita() == null ){
-			stBuilder.append(" FilhoDir: null"); 
+			stBuilder.append(" FilhoDir: NULL "); 
 		} else {
-			stBuilder.append(" FilhoDir: " + this.getDireita().getPalavra()); 
+			stBuilder.append(" FilhoDir: " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
 		}
 		
 		return stBuilder.toString();
@@ -92,7 +98,7 @@ public class Node {
 	}
 	
 	public String toString(){
-		return 	" Palavra: " + this.palavra;
+		return 	" Palavra: " + this.palavra + " " + this.chave;
 	}
 	
 	

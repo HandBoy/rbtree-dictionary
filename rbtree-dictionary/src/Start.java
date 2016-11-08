@@ -7,6 +7,7 @@ import java.util.List;
 import arvore.RBTreeDictionary;
 import arvore.RBTreeTools;
 import utils.Hash;
+import utils.Nill;
 import utils.Node;
 import utils.Reader;
 
@@ -31,8 +32,10 @@ public class Start {
 			tools.rbInsert(rbtree, node);
 		}
 		
+		System.out.println("\n IMPRIMINDO EM ORDEM");
+		tools.inorderTreeWalk(rbtree.getRaiz());
 
-		//tools.inorderTreeWalk(rbtree.getRaiz());
+		System.out.println("\n IMPRIMINDO O CHECK");
 		tools.rbCheck(rbtree.getRaiz());
 		//System.out.println(rbtree.getRaiz().details());
 		/*Node novo = new Node("Esperanca");

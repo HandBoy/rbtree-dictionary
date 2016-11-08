@@ -1,13 +1,14 @@
 package arvore;
 
+import utils.Nill;
 import utils.Node;
 
 public class RBTreeTools {
 	public void rbInsert(RBTreeDictionary rbtree, Node zNode){
-		Node yNodeAux = null;
+		Node yNodeAux = rbtree.getNill();
 		Node xNodeAux =  rbtree.getRaiz();
 		
-		while(xNodeAux != null){
+		while(!(xNodeAux instanceof Nill)){
 			yNodeAux = xNodeAux;
 			if( zNode.getChave() < xNodeAux.getChave())
 				xNodeAux = xNodeAux.getEsquerda();
@@ -15,20 +16,22 @@ public class RBTreeTools {
 				xNodeAux = xNodeAux.getDireita();			
 		}		
 		zNode.setPai(yNodeAux);
-		if (yNodeAux == null)
-			rbtree.setRaiz(zNode);		
-		else if (zNode.getChave() < yNodeAux.getChave()){
+		if (yNodeAux instanceof Nill){			
+			rbtree.setRaiz(zNode);	
 			System.out.println(zNode.toString() + " adicionada com sucesso");
-			yNodeAux.setEsquerda(zNode);
 		}
-		else if (zNode.getChave() > yNodeAux.getChave()){
+		else if (zNode.getChave() < yNodeAux.getChave()){			
+			yNodeAux.setEsquerda(zNode);
 			System.out.println(zNode.toString() + " adicionada com sucesso");
+		}
+		else if (zNode.getChave() > yNodeAux.getChave()){			
 			yNodeAux.setDireita(zNode);
+			System.out.println(zNode.toString() + " adicionada com sucesso");
 		} else
 				System.out.println(zNode.toString() + " Já existe no dicionário");
 		
-		zNode.setEsquerda(null);
-		zNode.setDireita(null);
+		zNode.setEsquerda(rbtree.getNill());
+		zNode.setDireita(rbtree.getNill());
 		zNode.setCor("red");
 			
 		insertFixUp(rbtree, zNode);
@@ -36,35 +39,42 @@ public class RBTreeTools {
 	}
 	
 	public void insertFixUp(RBTreeDictionary rbtree, Node zNode){
-		while(zNode != null && zNode.getPai().getCor().equals("red")){
-			if(zNode.getPai().getChave() == zNode.getPai().getPai().getChave()){
-				Node yNodeAux = zNode.getPai().getPai();
+		while(zNode.getPai().getCor().equals("red")){
+			if(zNode.getPai() == zNode.getPai().getPai().getEsquerda()){
+				Node yNodeAux = zNode.getPai().getPai().getDireita();
 				if(yNodeAux.getCor().equals("red")){
 					zNode.getPai().setCor("black");
 					yNodeAux.setCor("black");
 					zNode.getPai().getPai().setCor("red");
 					zNode = zNode.getPai().getPai();
-				} else if (zNode.getChave() == zNode.getPai().getDireita().getChave()){
-					zNode = zNode.getPai();
-					leftRotate(rbtree, zNode);
+				} else {
+					if (zNode == zNode.getPai().getDireita()){
+						zNode = zNode.getPai();
+						leftRotate(rbtree, zNode);	
+					}
 					zNode.getPai().setCor("black");
 					zNode.getPai().getPai().setCor("red");
-					rightRotate(rbtree, zNode.getPai().getPai());					
-				}
+					System.out.println("rightRotate"+ zNode.toString());
+					rightRotate(rbtree, zNode.getPai().getPai());
+				}				
+				
 			} else {
-				Node yNodeAux = zNode.getPai().getPai();
+				Node yNodeAux = zNode.getPai().getPai().getEsquerda();
 				if(yNodeAux.getCor().equals("red")){
 					zNode.getPai().setCor("black");
 					yNodeAux.setCor("black");
 					zNode.getPai().getPai().setCor("red");
 					zNode = zNode.getPai().getPai();
-				} else if (zNode.getChave() == zNode.getPai().getEsquerda().getChave()){
-					zNode = zNode.getPai();
-					rightRotate(rbtree, zNode);
+				} else {
+					if (zNode == zNode.getPai().getEsquerda()){
+						zNode = zNode.getPai();
+						rightRotate(rbtree, zNode);		
+					}
 					zNode.getPai().setCor("black");
 					zNode.getPai().getPai().setCor("red");
-					leftRotate(rbtree, zNode.getPai().getPai());					
-				}
+					System.out.println("leftRotate"+ zNode.toString());
+					leftRotate(rbtree, zNode.getPai().getPai());													
+				}				
 			}
 		}
 		rbtree.getRaiz().setCor("black");
@@ -74,13 +84,13 @@ public class RBTreeTools {
 		Node yNodeAux = xNode.getDireita();
 		xNode.setDireita(yNodeAux.getEsquerda());
 		
-		if(yNodeAux.getEsquerda() != null)
+		if(!(yNodeAux.getEsquerda() instanceof Nill))
 			yNodeAux.getEsquerda().setPai(xNode);
 		yNodeAux.setPai(xNode.getPai());
 		
-		if(xNode.getPai() == null)
+		if((yNodeAux.getPai() instanceof Nill))
 			rbtree.setRaiz(yNodeAux);
-		else if (xNode.getChave() == xNode.getPai().getEsquerda().getChave())
+		else if (xNode == xNode.getPai().getEsquerda())
 			xNode.getPai().setEsquerda(yNodeAux);
 		else 
 			xNode.getPai().setDireita(yNodeAux);
@@ -93,13 +103,13 @@ public class RBTreeTools {
 		Node yNodeAux = xNode.getEsquerda();
 		xNode.setEsquerda(yNodeAux.getDireita());
 		
-		if(yNodeAux.getDireita() != null)
+		if(!(yNodeAux.getDireita() instanceof Nill))
 			yNodeAux.getDireita().setPai(xNode);
 		yNodeAux.setPai(xNode.getPai());
 		
-		if(xNode.getPai() == null)
+		if((yNodeAux.getPai() instanceof Nill))
 			rbtree.setRaiz(yNodeAux);
-		else if (xNode.getChave() == xNode.getPai().getDireita().getChave())
+		else if (xNode == xNode.getPai().getDireita())
 			xNode.getPai().setDireita(yNodeAux);
 		else 
 			xNode.getPai().setEsquerda(yNodeAux);
@@ -113,7 +123,7 @@ public class RBTreeTools {
 	}
 	
 	public Node rbSearch(Node rbNodeTree, Node palavra){
-		if(rbNodeTree == null || rbNodeTree.getChave() == palavra.getChave())
+		if(!(rbNodeTree instanceof Nill) || rbNodeTree.getChave() == palavra.getChave())
 			return rbNodeTree;
 		if(palavra.getChave() < rbNodeTree.getChave())
 			return rbSearch(rbNodeTree.getEsquerda(), palavra);
@@ -126,7 +136,7 @@ public class RBTreeTools {
 	}
 	
 	public void rbCheck(Node node){
-		if (node != null){
+		if (!(node instanceof Nill)){
 			System.out.println(node.details());
 			rbCheck(node.getEsquerda());			
 			rbCheck(node.getDireita());
@@ -134,14 +144,14 @@ public class RBTreeTools {
 	}
 	
 	public void inorderTreeWalk(Node node){
-		if (node != null){
+		if (!(node instanceof Nill)){
 			inorderTreeWalk(node.getEsquerda());
 			System.out.println(node.toString());
 			inorderTreeWalk(node.getDireita());
 		}
 	}
 	public void preorderTreeWalk(Node node){
-		if (node != null){
+		if (!(node instanceof Nill)){
 			System.out.println(node.toString());
 			inorderTreeWalk(node.getEsquerda());			
 			inorderTreeWalk(node.getDireita());
