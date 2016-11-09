@@ -122,14 +122,14 @@ public class RBTreeTools {
 		Node y = zNode;
 		Node x = new Node();
 		y.setPrimalCor(y.getCor());
-		if (zNode.getEsquerda() instanceof Nill) {
+		if (zNode.getEsquerda() == rbtree.getNill()) {
 			x = zNode.getDireita();
 			rbTransplant(rbtree, zNode, zNode.getDireita());
-		} else if (zNode.getDireita() instanceof Nill){
+		} else if (zNode.getDireita() == rbtree.getNill()){
 			x = zNode.getEsquerda();
 			rbTransplant(rbtree, zNode, zNode.getEsquerda());
 		} else {
-			y = treeMinimum(zNode.getDireita());
+			y = treeMinimum(rbtree, zNode.getDireita());
 			y.setPrimalCor(y.getCor());
 			x = y.getDireita();
 			if(y.getPai() == zNode){
@@ -154,45 +154,49 @@ public class RBTreeTools {
 			if(xNode == xNode.getPai().getEsquerda()){
 				Node w = xNode.getPai().getDireita();
 				if(w.getCor().equals("red")){
-					w.setCor("black");
-					xNode.getPai().setCor("red");
-					leftRotate(rbtree, xNode.getPai());
-					w = xNode.getPai().getDireita();
+					w.setCor("black");								/// CASE 1
+					xNode.getPai().setCor("red");					/// CASE 1
+					leftRotate(rbtree, xNode.getPai());				/// CASE 1
+					w = xNode.getPai().getDireita();				/// CASE 1
 				}
-				if(w.getEsquerda().getCor().equals("black") && w.getDireita().equals("black")){
-					w.setCor("red");
-					xNode = xNode.getPai();
+				if(w.getEsquerda().getCor().equals("black") && w.getDireita().getCor().equals("black")){					
+					w.setCor("red");								/// CASE 2
+					xNode = xNode.getPai();							/// CASE 2
 				} else {
-					if(w.getDireita().getCor().equals("black")){
-						w.getEsquerda().setCor("black");
-						w.setCor("red");
-						rightRotate(rbtree, w);
-						w = xNode.getPai().getDireita();
+					if(w.getDireita().getCor().equals("black")){						
+						w.getEsquerda().setCor("black");			/// CASE 3
+						w.setCor("red");							/// CASE 3
+						rightRotate(rbtree, w);						/// CASE 3
+						w = xNode.getPai().getDireita();			/// CASE 3
 					}
-					w.setCor(xNode.getPai().getCor());
-					xNode.getPai().setCor("black");
-					w.getDireita().setCor("black");
-					leftRotate(rbtree, xNode.getPai());
-					xNode = rbtree.getRaiz();
+					w.setCor(xNode.getPai().getCor());				/// CASE 3
+					xNode.getPai().setCor("black");					/// CASE 3
+					w.getDireita().setCor("black");					/// CASE 3
+					leftRotate(rbtree, xNode.getPai());				/// CASE 3
+					xNode = rbtree.getRaiz();						/// CASE 3
 				}
 			} else {
 				Node w = xNode.getPai().getEsquerda();
 				if(w.getCor().equals("red")){
+					/// CASE 1
 					w.setCor("black");
 					xNode.getPai().setCor("red");
 					rightRotate(rbtree, xNode.getPai());
 					w = xNode.getPai().getEsquerda();
 				}
-				if(w.getDireita().getCor().equals("black") && w.getEsquerda().equals("black")){
+				if(w.getDireita().getCor().equals("black") && w.getEsquerda().getCor().equals("black")){
+					/// CASE 2
 					w.setCor("red");
 					xNode = xNode.getPai();
 				} else {
 					if(w.getEsquerda().getCor().equals("black")){
+						/// CASE 3
 						w.getDireita().setCor("black");
 						w.setCor("red");
 						leftRotate(rbtree, w);
 						w = xNode.getPai().getEsquerda();
 					}
+					/// CASE 4
 					w.setCor(xNode.getPai().getCor());
 					xNode.getPai().setCor("black");
 					w.getEsquerda().setCor("black");
@@ -218,7 +222,7 @@ public class RBTreeTools {
 	}
 	
 	public void rbTransplant(RBTreeDictionary rbtree, Node uAux, Node vAux){
-		if(uAux.getPai() instanceof Nill){
+		if(uAux.getPai() == rbtree.getNill()){
 			rbtree.setRaiz(vAux);
 		} else if(uAux == uAux.getPai().getEsquerda()){
 			uAux.getPai().setEsquerda(vAux);
@@ -251,14 +255,14 @@ public class RBTreeTools {
 		} 
 	}
 	
-	public Node treeMinimum(Node node){
-		while (!(node.getEsquerda() instanceof Nill))
+	public Node treeMinimum(RBTreeDictionary rbtree, Node node){
+		while (!(node.getEsquerda() == rbtree.getNill()))
 			node = node.getEsquerda();
 		return node;
 	}
 	
-	public Node treeMaximum(Node node){
-		while (!(node.getDireita() instanceof Nill))
+	public Node treeMaximum(RBTreeDictionary rbtree, Node node){
+		while (!(node.getDireita() == rbtree.getNill()))
 			node = node.getDireita();
 		return node;
 	}
