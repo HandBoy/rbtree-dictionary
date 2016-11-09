@@ -146,6 +146,7 @@ public class RBTreeTools {
 		}
 		if(y.getPrimalCor().equals("black"))
 			rbDeleteFixup(rbtree, x);
+		System.out.println("Palavra: " + zNode.getPalavra() + " deletada com sucesso");
 	}
 	
 	public void rbDeleteFixup(RBTreeDictionary rbtree, Node xNode){

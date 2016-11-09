@@ -79,6 +79,7 @@ public class Node {
 
 	public String details(){
 		StringBuilder stBuilder = new StringBuilder();
+		stBuilder.append("(");
 		if(this.getPai() instanceof Nill ){
 			stBuilder.append("NILL"); 
 		} else {
@@ -100,6 +101,7 @@ public class Node {
 		} else {
 			stBuilder.append(", " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
 		}
+		stBuilder.append(")");
 		
 		return stBuilder.toString();
 		
