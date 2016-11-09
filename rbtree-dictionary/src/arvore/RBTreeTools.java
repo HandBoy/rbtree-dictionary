@@ -54,7 +54,7 @@ public class RBTreeTools {
 					}
 					zNode.getPai().setCor("black");
 					zNode.getPai().getPai().setCor("red");
-					System.out.println("rightRotate"+ zNode.toString());
+					//System.out.println("rightRotate"+ zNode.toString());
 					rightRotate(rbtree, zNode.getPai().getPai());
 				}				
 				
@@ -72,7 +72,7 @@ public class RBTreeTools {
 					}
 					zNode.getPai().setCor("black");
 					zNode.getPai().getPai().setCor("red");
-					System.out.println("leftRotate"+ zNode.toString());
+					//System.out.println("leftRotate"+ zNode.toString());
 					leftRotate(rbtree, zNode.getPai().getPai());													
 				}				
 			}
@@ -118,12 +118,93 @@ public class RBTreeTools {
 		xNode.setPai(yNodeAux);
 	}
 	
-	public boolean rbDelete(RBTreeDictionary rbtree, Node novo){
-		return false;
+	public void rbDelete(RBTreeDictionary rbtree, Node zNode){
+		Node y = zNode;
+		Node x = new Node();
+		y.setPrimalCor(y.getCor());
+		if (zNode.getEsquerda() instanceof Nill) {
+			x = zNode.getDireita();
+			rbTransplant(rbtree, zNode, zNode.getDireita());
+		} else if (zNode.getDireita() instanceof Nill){
+			x = zNode.getEsquerda();
+			rbTransplant(rbtree, zNode, zNode.getEsquerda());
+		} else {
+			y = treeMinimum(zNode.getDireita());
+			y.setPrimalCor(y.getCor());
+			x = y.getDireita();
+			if(y.getPai() == zNode){
+				x.setPai(y);
+			} else {
+				rbTransplant(rbtree, y, y.getDireita());
+				y.setDireita(zNode.getDireita());
+				y.getDireita().setPai(y);
+			}
+			rbTransplant(rbtree, zNode, y);
+			y.setEsquerda(zNode.getEsquerda());
+			y.getEsquerda().setPai(y);
+			y.setCor(zNode.getCor());			
+		}
+		if(y.getPrimalCor().equals("black"))
+			rbDeleteFixup(rbtree, x);
+	}
+	
+	public void rbDeleteFixup(RBTreeDictionary rbtree, Node xNode){
+		while(xNode != rbtree.getRaiz() && xNode.getCor().equals("black")){
+			if(xNode == xNode.getPai().getEsquerda()){
+				Node w = xNode.getPai().getDireita();
+				if(w.getCor().equals("red")){
+					w.setCor("black");
+					xNode.getPai().setCor("red");
+					leftRotate(rbtree, xNode.getPai());
+					w = xNode.getPai().getDireita();
+				}
+				if(w.getEsquerda().getCor().equals("black") && w.getDireita().equals("black")){
+					w.setCor("red");
+					xNode = xNode.getPai();
+				} else {
+					if(w.getDireita().getCor().equals("black")){
+						w.getEsquerda().setCor("black");
+						w.setCor("red");
+						rightRotate(rbtree, w);
+						w = xNode.getPai().getDireita();
+					}
+					w.setCor(xNode.getPai().getCor());
+					xNode.getPai().setCor("black");
+					w.getDireita().setCor("black");
+					leftRotate(rbtree, xNode.getPai());
+					xNode = rbtree.getRaiz();
+				}
+			} else {
+				Node w = xNode.getPai().getEsquerda();
+				if(w.getCor().equals("red")){
+					w.setCor("black");
+					xNode.getPai().setCor("red");
+					rightRotate(rbtree, xNode.getPai());
+					w = xNode.getPai().getEsquerda();
+				}
+				if(w.getDireita().getCor().equals("black") && w.getEsquerda().equals("black")){
+					w.setCor("red");
+					xNode = xNode.getPai();
+				} else {
+					if(w.getEsquerda().getCor().equals("black")){
+						w.getDireita().setCor("black");
+						w.setCor("red");
+						leftRotate(rbtree, w);
+						w = xNode.getPai().getEsquerda();
+					}
+					w.setCor(xNode.getPai().getCor());
+					xNode.getPai().setCor("black");
+					w.getEsquerda().setCor("black");
+					rightRotate(rbtree, xNode.getPai());
+					xNode = rbtree.getRaiz();
+				}
+			}
+		}
+		xNode.setCor("black");
 	}
 	
 	public Node rbSearch(Node rbNodeTree, Node palavra){
-		if(!(rbNodeTree instanceof Nill) || rbNodeTree.getChave() == palavra.getChave())
+		if((rbNodeTree instanceof Nill) || rbNodeTree.getChave() == palavra.getChave())
 			return rbNodeTree;
 		if(palavra.getChave() < rbNodeTree.getChave())
 			return rbSearch(rbNodeTree.getEsquerda(), palavra);
@@ -133,6 +214,17 @@ public class RBTreeTools {
 	
 	public boolean rbPrint(RBTreeDictionary rbtree){
 		return false;
+	}
+	
+	public void rbTransplant(RBTreeDictionary rbtree, Node uAux, Node vAux){
+		if(uAux.getPai() instanceof Nill){
+			rbtree.setRaiz(vAux);
+		} else if(uAux == uAux.getPai().getEsquerda()){
+			uAux.getPai().setEsquerda(vAux);
+		} else {
+			uAux.getPai().setDireita(vAux);
+		}
+		vAux.setPai(uAux.getPai());			
 	}
 	
 	public void rbCheck(Node node){
@@ -158,16 +250,16 @@ public class RBTreeTools {
 		} 
 	}
 	
-	public String treeMinimum(Node node){
-		while (node.getEsquerda() != null)
+	public Node treeMinimum(Node node){
+		while (!(node.getEsquerda() instanceof Nill))
 			node = node.getEsquerda();
-		return node.toString();
+		return node;
 	}
 	
-	public String treeMaximum(Node node){
-		while (node.getDireita() != null)
+	public Node treeMaximum(Node node){
+		while (!(node.getDireita() instanceof Nill))
 			node = node.getDireita();
-		return node.toString();
+		return node;
 	}
 	
 	

@@ -8,6 +8,7 @@ public class Node {
 	protected int chave;
 	protected String palavra;
 	protected int acao;	
+	protected String primaryCor;
 
 	public Node(String palavra) {
 		super();
@@ -59,8 +60,7 @@ public class Node {
 	}
 	public void setPalavra(String palavra) {
 		this.palavra = palavra;
-	}
-	
+	}	
 	
 	public int getAcao() {
 		return acao;
@@ -68,29 +68,37 @@ public class Node {
 	public void setAcao(int acao) {
 		this.acao = acao;
 	}
-	public String details(){
+	
+	public String getPrimalCor() {
+		return primaryCor;
+	}
 
+	public void setPrimalCor(String zcor) {
+		this.primaryCor = zcor;
+	}
+
+	public String details(){
 		StringBuilder stBuilder = new StringBuilder();
 		if(this.getPai() instanceof Nill ){
-			stBuilder.append("Pai: NULL "); 
+			stBuilder.append("NILL"); 
 		} else {
-			stBuilder.append("Pai: " + this.getPai().getPalavra()); 
+			stBuilder.append(this.getPai().getPalavra()); 
 		}	
 
-		stBuilder.append(" Palavra: " + this.palavra );
-		stBuilder.append(" Chave: " + this.chave );		
-		stBuilder.append(" Cor: " + this.cor );
+		stBuilder.append(", " + this.palavra );
+		stBuilder.append(", " + this.chave );		
+		stBuilder.append(", " + this.cor );
 		
-		if(this.getEsquerda() == null ){
-			stBuilder.append(" FilhoEsq: NULL "); 
+		if(this.getEsquerda() instanceof Nill ){
+			stBuilder.append(", NULL"); 
 		} else {
-			stBuilder.append(" FilhoEsq: " + this.getEsquerda().getPalavra()+ " " + this.getEsquerda().getChave()); 
+			stBuilder.append(", " + this.getEsquerda().getPalavra()+ " " + this.getEsquerda().getChave()); 
 		}
 		
-		if(this.getDireita() == null ){
-			stBuilder.append(" FilhoDir: NULL "); 
+		if(this.getDireita() instanceof Nill ){
+			stBuilder.append(", NULL "); 
 		} else {
-			stBuilder.append(" FilhoDir: " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
+			stBuilder.append(", " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
 		}
 		
 		return stBuilder.toString();

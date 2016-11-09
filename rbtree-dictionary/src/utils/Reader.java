@@ -26,8 +26,9 @@ public class Reader {
 					linha = br.readLine().trim();						//lê a proxima linha	
 					//System.out.println(linha.substring(0, linha.length()-1));
 					//System.out.println(linha.charAt(linha.length()-1));
-					Node palavra = new Node(linha.substring(0, linha.length()-1));
-					palavra.setAcao(linha.charAt(linha.length()-1));
+					Node palavra = new Node(linha.substring(0, linha.length()-1).trim());
+					int acao =  Character.getNumericValue(linha.charAt(linha.length()-1));
+					palavra.setAcao(acao);
 					palavras.add(palavra);
 				}
 
