@@ -23,7 +23,22 @@ public class Start {
 
 		System.out.println("Procurando Arquivo");
 		
-		
+		/*String str1 = "Laranja";
+	    String str2 = new String("Fortuito");
+	    String str3 = new String("Zebra");
+	    
+	    Node node1 = new Node("Laranja");
+	    Node node2 = new Node("Fortuito");
+	    Node node3 = new Node("Zebra");
+	      
+	      int result = node1.getPalavra().compareToIgnoreCase(str1);
+	      System.out.println(result);
+	      
+	      result = node1.getPalavra().compareToIgnoreCase( str2 );
+	      System.out.println(result);
+	      
+	      result = node1.getPalavra().compareToIgnoreCase( str3 );
+	      System.out.println(result);*/
 		
 		if(palavras == null)
 			System.out.println("Arquivo Não Encontrado");
@@ -32,6 +47,8 @@ public class Start {
 		
 		
 		for (Node node : palavras) {
+			
+			//System.out.println(node.getPalavra() + " " +node.getPalavra().compareTo("Laranja"));
 			//System.out.println(node.toString() + " " + node.getAcao());
 			if(node.getAcao() == 1){
 				System.out.println("\n Adicionando palavra: " + node.getPalavra());

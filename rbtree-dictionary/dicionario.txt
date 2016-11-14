@@ -7,10 +7,3 @@ cavalo     1
 fone 1
 bateria 1
 relogio 1
-drone     1
-celular 1
-monitor 1
-celular 0
-cavalo 0
-facão 0
-fortuito 0

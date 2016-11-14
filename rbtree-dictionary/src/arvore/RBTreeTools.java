@@ -8,9 +8,10 @@ public class RBTreeTools {
 		Node yNodeAux = rbtree.getNill();
 		Node xNodeAux =  rbtree.getRaiz();
 		
+		//Buscando o nó que irá ser pai do zNode
 		while(!(xNodeAux instanceof Nill)){
 			yNodeAux = xNodeAux;
-			if( zNode.getChave() < xNodeAux.getChave())
+			if( zNode.compareTo(xNodeAux.getPalavra()) < 0)
 				xNodeAux = xNodeAux.getEsquerda();
 			else
 				xNodeAux = xNodeAux.getDireita();			
@@ -20,12 +21,14 @@ public class RBTreeTools {
 			rbtree.setRaiz(zNode);	
 			System.out.println(zNode.toString() + " adicionada com sucesso");
 		}
-		else if (zNode.getChave() < yNodeAux.getChave()){			
+		else if (zNode.compareTo(yNodeAux.getPalavra()) < 0){			
 			yNodeAux.setEsquerda(zNode);
+			System.out.println(zNode.getPalavra() + " < " + yNodeAux.getPalavra());
 			System.out.println(zNode.toString() + " adicionada com sucesso");
 		}
-		else if (zNode.getChave() > yNodeAux.getChave()){			
+		else if (zNode.compareTo(yNodeAux.getPalavra()) > 0){			
 			yNodeAux.setDireita(zNode);
+			System.out.println(zNode.getPalavra() + " > " + yNodeAux.getPalavra());
 			System.out.println(zNode.toString() + " adicionada com sucesso");
 		} else
 				System.out.println(zNode.toString() + " Já existe no dicionário");
@@ -209,9 +212,9 @@ public class RBTreeTools {
 	}
 	
 	public Node rbSearch(Node rbNodeTree, Node palavra){
-		if((rbNodeTree instanceof Nill) || rbNodeTree.getChave() == palavra.getChave())
+		if((rbNodeTree instanceof Nill) || rbNodeTree.compareTo(palavra.getPalavra()) == 0)
 			return rbNodeTree;
-		if(palavra.getChave() < rbNodeTree.getChave())
+		if(rbNodeTree.compareTo(palavra.getPalavra()) > 0)
 			return rbSearch(rbNodeTree.getEsquerda(), palavra);
 		else
 			return rbSearch(rbNodeTree.getDireita(), palavra);

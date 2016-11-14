@@ -1,6 +1,6 @@
 package utils;
 
-public class Node {
+public class Node implements Comparable{
 	protected Node pai;
 	protected Node esquerda;
 	protected Node direita;
@@ -55,6 +55,12 @@ public class Node {
 	public void setCor(String cor) {
 		this.cor = cor;
 	}
+	public boolean isBlack(){
+		if(this.cor.equals("black"))
+			return true;
+		else
+			return false;
+	}
 	public String getPalavra() {
 		return palavra;
 	}
@@ -76,6 +82,18 @@ public class Node {
 	public void setPrimalCor(String zcor) {
 		this.primaryCor = zcor;
 	}
+	
+	public int alturaNegra(){
+		int qtd = 0;
+		Node node = this.getEsquerda();
+		while(!(node instanceof Nill) ){
+			if(node.isBlack())
+				qtd++;
+			node = node.getEsquerda();
+			
+		}
+		return qtd;
+	}
 
 	public String details(){
 		StringBuilder stBuilder = new StringBuilder();
@@ -89,15 +107,16 @@ public class Node {
 		stBuilder.append(", " + this.palavra );
 		stBuilder.append(", " + this.chave );		
 		stBuilder.append(", " + this.cor );
+		stBuilder.append(", " + this.alturaNegra() );
 		
 		if(this.getEsquerda() instanceof Nill ){
-			stBuilder.append(", NULL"); 
+			stBuilder.append(", NILL"); 
 		} else {
 			stBuilder.append(", " + this.getEsquerda().getPalavra()+ " " + this.getEsquerda().getChave()); 
 		}
 		
 		if(this.getDireita() instanceof Nill ){
-			stBuilder.append(", NULL "); 
+			stBuilder.append(", NILL "); 
 		} else {
 			stBuilder.append(", " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
 		}
@@ -107,8 +126,20 @@ public class Node {
 		
 	}
 	
+	
+	
 	public String toString(){
 		return 	" Palavra: " + this.palavra + " " + this.chave;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if(this.palavra.compareToIgnoreCase((String) o) > 0)
+			return 1;
+		else if(this.palavra.compareToIgnoreCase((String) o) < 0)
+			return -1;
+		else
+			return 0;
 	}
 	
 	
