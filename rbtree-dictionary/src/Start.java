@@ -17,67 +17,47 @@ import utils.Reader;
 public class Start {
 
 	public static void main(String[] args) {
-		List<Node> palavras = Reader.lerArquivo(args[0]);
+		
+		if(args.length == 0){
+			System.out.println("Passe algum arqumento para o programa");
+			System.exit(0);
+		}
+		File arquivo = new File(args[0]);
+		List<Node> palavras = null;
+		if(arquivo.exists()){
+			System.out.println("Arquivo Encontrado.");
+			System.out.println(arquivo.getAbsolutePath());
+			System.out.println("Palavra com mais de 20 caracteres não serão adicionadas.");
+			palavras = Reader.lerArquivo(arquivo);
+		} else {
+			System.out.println("Arquivo Não Encontrado: " + args[0]);
+			System.exit(0);
+		}
+		
 		RBTreeDictionary rbtree = new RBTreeDictionary();
 		RBTreeTools tools = new RBTreeTools();
-
-		System.out.println("Procurando Arquivo");
-		
-		/*String str1 = "Laranja";
-	    String str2 = new String("Fortuito");
-	    String str3 = new String("Zebra");
-	    
-	    Node node1 = new Node("Laranja");
-	    Node node2 = new Node("Fortuito");
-	    Node node3 = new Node("Zebra");
-	      
-	      int result = node1.getPalavra().compareToIgnoreCase(str1);
-	      System.out.println(result);
-	      
-	      result = node1.getPalavra().compareToIgnoreCase( str2 );
-	      System.out.println(result);
-	      
-	      result = node1.getPalavra().compareToIgnoreCase( str3 );
-	      System.out.println(result);*/
-		
-		if(palavras == null)
-			System.out.println("Arquivo Não Encontrado");
-		else
-			System.out.println("Arquivo  Encontrado");
-		
+				
+		if(palavras == null){
+			System.out.println("Arquivo vazio");
+			System.exit(0);
+		}
 		
 		for (Node node : palavras) {
-			
-			//System.out.println(node.getPalavra() + " " +node.getPalavra().compareTo("Laranja"));
-			//System.out.println(node.toString() + " " + node.getAcao());
 			if(node.getAcao() == 1){
-				System.out.println("\n Adicionando palavra: " + node.getPalavra());
 				tools.rbInsert(rbtree, node);
-				//System.out.println("\n Checando a árvore: ");
-				//tools.rbCheck(rbtree.getRaiz());
 			}
 			else {
 				Node auxNode = tools.rbSearch(rbtree.getRaiz(), node);
 				if(!(auxNode instanceof Nill)){
-					System.out.println("\n Deletando a palavra: " + node.getPalavra());
+					System.out.println("Deletando a palavra: " + node.getPalavra());
 					tools.rbDelete(rbtree, auxNode);
-					//System.out.println("\n Checando a árvore: ");
-					//tools.rbCheck(rbtree.getRaiz());
 				} else {
-					System.out.println("Não foi possível deletar a palavra: " + node.toString());
-					System.out.println("Palavra nao encontrada.");
+					System.out.print("Não foi possível deletar a palavra: " + node.toString());
+					System.out.println(", palavra nao encontrada.");
 				}
 				
 			}
-		}
-		
-		//Node node = tools.treeMinimum(rbtree.getRaiz());
-		//System.out.println("\n IMPRIMINDO MINIMO: " + node.toString());
-		//System.out.println("\n IMPRIMINDO EM ORDEM");
-		//tools.inorderTreeWalk(rbtree.getRaiz());
-
-		//System.out.println("\n IMPRIMINDO O CHECK");
-		//tools.rbCheck(rbtree.getRaiz());		
+		}	
 		menu(rbtree, tools);			
 	}
 	
@@ -103,8 +83,13 @@ public class Start {
 			case "1":
 				System.out.print("\n Digite a palavra a ser inserida: ");
 				palavra = scanner.nextLine();
-				node = new Node(palavra);
-				tools.rbInsert(rbtree, node);
+				if(palavra.length() < 21){
+					node = new Node(palavra);
+					tools.rbInsert(rbtree, node);
+				} else {
+					System.out.println("Palavra deve conter menos de 20 caracteres.");
+				}
+				
 				break;
 			case "2":
 				System.out.print("\n Digite a palavra a ser buscada: ");
@@ -141,6 +126,7 @@ public class Start {
 				break;
 
 			default:
+				System.out.println("Até a próxima!!!");
 				break;
 			}
 			

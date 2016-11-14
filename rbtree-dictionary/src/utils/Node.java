@@ -5,7 +5,6 @@ public class Node implements Comparable{
 	protected Node esquerda;
 	protected Node direita;
 	protected String cor;
-	protected int chave;
 	protected String palavra;
 	protected int acao;	
 	protected String primaryCor;
@@ -16,21 +15,12 @@ public class Node implements Comparable{
 		this.esquerda = null;
 		this.direita = null;
 		this.cor = "red";
-		this.palavra = palavra;
-		this.chave = Hash.hash(palavra);		
+		this.palavra = palavra;		
 	}
 	
 	public Node() {
 		super();		
-	}
-	
-	
-	public int getChave() {
-		return chave;
-	}
-	public void setChave(int chave) {
-		this.chave = chave;
-	}
+	}	
 	public Node getPai() {
 		return pai;
 	}
@@ -66,15 +56,13 @@ public class Node implements Comparable{
 	}
 	public void setPalavra(String palavra) {
 		this.palavra = palavra;
-	}	
-	
+	}		
 	public int getAcao() {
 		return acao;
 	}
 	public void setAcao(int acao) {
 		this.acao = acao;
 	}
-	
 	public String getPrimalCor() {
 		return primaryCor;
 	}
@@ -104,21 +92,20 @@ public class Node implements Comparable{
 			stBuilder.append(this.getPai().getPalavra()); 
 		}	
 
-		stBuilder.append(", " + this.palavra );
-		stBuilder.append(", " + this.chave );		
+		stBuilder.append(", " + this.palavra );	
 		stBuilder.append(", " + this.cor );
 		stBuilder.append(", " + this.alturaNegra() );
 		
 		if(this.getEsquerda() instanceof Nill ){
 			stBuilder.append(", NILL"); 
 		} else {
-			stBuilder.append(", " + this.getEsquerda().getPalavra()+ " " + this.getEsquerda().getChave()); 
+			stBuilder.append(", " + this.getEsquerda().getPalavra()); 
 		}
 		
 		if(this.getDireita() instanceof Nill ){
 			stBuilder.append(", NILL "); 
 		} else {
-			stBuilder.append(", " + this.getDireita().getPalavra()+ " "  + this.getDireita().getChave()); 
+			stBuilder.append(", " + this.getDireita().getPalavra()); 
 		}
 		stBuilder.append(")");
 		
@@ -126,12 +113,6 @@ public class Node implements Comparable{
 		
 	}
 	
-	
-	
-	public String toString(){
-		return 	" Palavra: " + this.palavra + " " + this.chave;
-	}
-
 	@Override
 	public int compareTo(Object o) {
 		if(this.palavra.compareToIgnoreCase((String) o) > 0)
@@ -142,5 +123,8 @@ public class Node implements Comparable{
 			return 0;
 	}
 	
+	public String toString(){
+		return this.palavra;
+	}
 	
 }

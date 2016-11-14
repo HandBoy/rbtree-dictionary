@@ -23,12 +23,12 @@ public class RBTreeTools {
 		}
 		else if (zNode.compareTo(yNodeAux.getPalavra()) < 0){			
 			yNodeAux.setEsquerda(zNode);
-			System.out.println(zNode.getPalavra() + " < " + yNodeAux.getPalavra());
+			//System.out.println(zNode.getPalavra() + " < " + yNodeAux.getPalavra());
 			System.out.println(zNode.toString() + " adicionada com sucesso");
 		}
 		else if (zNode.compareTo(yNodeAux.getPalavra()) > 0){			
 			yNodeAux.setDireita(zNode);
-			System.out.println(zNode.getPalavra() + " > " + yNodeAux.getPalavra());
+			//System.out.println(zNode.getPalavra() + " > " + yNodeAux.getPalavra());
 			System.out.println(zNode.toString() + " adicionada com sucesso");
 		} else
 				System.out.println(zNode.toString() + " Já existe no dicionário");
